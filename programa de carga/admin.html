@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Productos - El Puesto de Juan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --primary: #14c97c;
+      --secondary: #fd9644;
+      --danger: #e74c3c;
+      --gray: #f3f3f3;
+      --font: 'Montserrat', 'Open Sans', Arial, sans-serif;
+    }
+    body {
+      font-family: var(--font);
+      background: var(--gray);
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    .container {
+      max-width: 900px;
+      margin: 36px auto;
+      background: #fff;
+      border-radius: 13px;
+      padding: 2.2em 1.4em 2em 1.4em;
+      box-shadow: 0 8px 36px #2222;
+    }
+    h2 {
+      color: var(--primary);
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 900;
+      letter-spacing: -.5px;
+      margin-bottom: 1em;
+      text-align: center;
+      font-size: 2.1em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fafaf9;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1.2em;
+      box-shadow: 0 2px 10px #0001;
+    }
+    th, td {
+      border: 1px solid #eee;
+      padding: 10px 8px;
+      text-align: left;
+      font-size: 1.07em;
+      font-family: var(--font);
+    }
+    th {
+      background: #f6fffa;
+      color: #14c97c;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      font-size: 1em;
+    }
+    tr:nth-child(even) td {
+      background: #f9f9fa;
+    }
+    .actions button {
+      margin-right: 6px;
+      margin-bottom: 3px;
+      font-size: 1em;
+    }
+    .add-row input, td input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 7px 6px;
+      font-size: 1em;
+      border: 1.2px solid #d1f5e4;
+      border-radius: 6px;
+      outline: none;
+      transition: border .17s;
+      font-family: var(--font);
+      background: #f8fff8;
+    }
+    .add-row input:focus, td input:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+    .add-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 9px 22px;
+      border-radius: 7px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 7px #14c97c22;
+      transition: background .13s;
+    }
+    .add-btn:active { background: #0c8c53; }
+    .edit-btn {
+      background: var(--secondary);
+      color: #fff;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .13s;
+      font-weight: 600;
+    }
+    .del-btn {
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .13s;
+      font-weight: 600;
+    }
+    .save-btn, .cancel-btn {
+      padding: 7px 14px;
+      border-radius: 6px;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1em;
+    }
+    .save-btn { background: var(--primary); }
+    .cancel-btn { background: #aaa; }
+    .msg {
+      margin: 1em 0 .7em 0;
+      padding: 9px 18px;
+      border-radius: 7px;
+      background: #e5ffeb;
+      color: #1a8842;
+      font-weight: 600;
+      font-size: 1.07em;
+      text-align: center;
+      box-shadow: 0 2px 8px #14c97c22;
+    }
+    .error {
+      background: #ffeaea;
+      color: #d13b1e;
+      box-shadow: 0 2px 8px #e74c3c22;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 0.5em; }
+      h2 { font-size: 1.5em; }
+      table, th, td { font-size: 0.97em; }
+    }
+    @media (max-width: 500px) {
+      .container { padding: 0.1em; }
+      table, th, td { font-size: 0.93em; }
+      th, td { padding: 7px 4px; }
+      .add-btn, .edit-btn, .del-btn, .save-btn, .cancel-btn { padding: 7px 7px; font-size: 0.95em;}
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:900|Open+Sans:400,600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h2>Administrar Productos</h2>
+    <div id="msg"></div>
+    <table id="productos-table">
+      <thead>
+        <tr id="thead-row"></tr>
+      </thead>
+      <tbody id="productos-body"></tbody>
+      <tfoot>
+        <tr class="add-row" id="add-row"></tr>
+      </tfoot>
+    </table>
+  </div>
+  <script>
+    const API_URL = 'http://localhost:3000/productos';
+    let headers = [];
+    let productos = [];
+    let editingRow = null;
+
+    function showMsg(text, error=false) {
+      const msg = document.getElementById('msg');
+      msg.textContent = text;
+      msg.className = error ? 'msg error' : 'msg';
+      setTimeout(() => { msg.textContent = ''; }, 2300);
+    }
+
+    async function fetchProductos() {
+      try {
+        const r = await fetch(API_URL);
+        productos = await r.json();
+        if (!productos.length) return;
+        headers = Object.keys(productos[0]);
+        renderTable();
+        renderAddRow();
+      } catch (e) {
+        showMsg("Error al cargar productos: " + e.message, true);
+      }
+    }
+
+    function renderTable() {
+      // Headers
+      document.getElementById('thead-row').innerHTML =
+        headers.map(h => `<th>${h}</th>`).join('') + '<th>Acciones</th>';
+
+      // Body
+      document.getElementById('productos-body').innerHTML = productos.map((prod, i) =>
+        `<tr>
+          ${headers.map(h =>
+            editingRow === i
+              ? `<td><input value="${prod[h] ?? ''}" data-h="${h}" style="width:100%"></td>`
+              : `<td>${prod[h] ?? ''}</td>`
+          ).join('')}
+          <td class="actions">
+            ${
+              editingRow === i
+              ? `<button class="save-btn" onclick="saveEdit(${i})">Guardar</button>
+                 <button class="cancel-btn" onclick="cancelEdit()">Cancelar</button>`
+              : `<button class="edit-btn" onclick="editRow(${i})">Editar</button>
+                 <button class="del-btn" onclick="delRow(${i})">Borrar</button>`
+            }
+          </td>
+        </tr>`
+      ).join('');
+    }
+
+    function renderAddRow() {
+      document.getElementById('add-row').innerHTML =
+        headers.map(h =>
+          `<td><input placeholder="${h}" id="add-${h}"></td>`
+        ).join('')
+        + `<td><button class="add-btn" onclick="addRow()">Agregar</button></td>`;
+    }
+
+    // --- CRUD operaciones ---
+
+    async function addRow() {
+      const values = headers.map(h => document.getElementById('add-'+h).value.trim());
+      if (values.some(v=>!v)) { showMsg('Completa todos los campos', true); return; }
+      const r = await fetch(API_URL, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ values }),
+      });
+      if (r.ok) {
+        showMsg('Producto agregado');
+        fetchProductos();
+        // Limpiar inputs
+        headers.forEach(h => document.getElementById('add-'+h).value = '');
+      } else {
+        showMsg('Error al agregar', true);
+      }
+    }
+
+    function editRow(i) {
+      editingRow = i;
+      renderTable();
+    }
+
+    function cancelEdit() {
+      editingRow = null;
+      renderTable();
+    }
+
+    async function saveEdit(i) {
+      const row = i + 2; // Primer fila de datos es 2 por encabezado
+      const tds = document.querySelectorAll(`#productos-body tr:nth-child(${i+1}) input`);
+      const values = Array.from(tds).map(inp => inp.value.trim());
+      if (values.some(v=>!v)) { showMsg('Completa todos los campos', true); return; }
+      const r = await fetch(API_URL + '/' + row, {
+        method: 'PUT',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ values }),
+      });
+      if (r.ok) {
+        showMsg('Producto actualizado');
+        editingRow = null;
+        fetchProductos();
+      } else {
+        showMsg('Error al editar', true);
+      }
+    }
+
+    async function delRow(i) {
+      if (!confirm('¿Seguro que quieres borrar este producto?')) return;
+      const row = i + 2;
+      const r = await fetch(API_URL + '/' + row, { method: 'DELETE' });
+      if (r.ok) {
+        showMsg('Producto borrado');
+        fetchProductos();
+      } else {
+        showMsg('Error al borrar', true);
+      }
+    }
+
+    // Hacer global para inline events
+    window.editRow = editRow;
+    window.delRow = delRow;
+    window.saveEdit = saveEdit;
+    window.cancelEdit = cancelEdit;
+    window.addRow = addRow;
+
+    fetchProductos();
+  </script>
+</body>
+</html>
