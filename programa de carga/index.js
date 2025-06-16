@@ -6,9 +6,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const SPREADSHEET_ID = '1Prcd0ukPEDSLsmvBjpDr-HeOoh_j15H0h4ROo10CcaY';
-const SHEET_NAME = 'Productos'; // Nombre exacto de tu hoja
-const SHEET_ID = 1060203637;    // Tu gid exacto
+const SPREADSHEET_ID = '1v1BwSx6BAY9MCkCkNXZ7TR8WeeAlhYigw6WgUS7iTFQ';
+const SHEET_NAME = 'productos'; // Nombre exacto de tu hoja
+const SHEET_ID = 1824323229;    // Tu gid exacto
 
 const auth = new google.auth.GoogleAuth({
   keyFile: 'service-account.json',
