@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "puestodejuan",
+  "private_key_id": "32d0317d8b56b871a83fa986173150355b4bf25c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDqRCif1/7aLKY6\n9Hl3GquuARbWRePLYudoR5VOXggoLsQusiIM0/FWcL5aoWfvoXO5odLnAN/L+GNZ\noG1/m8VuRDLt9pGyQhVpR/rTLVNk7+/TpOuHPEegf8ABZ8lQkx94+vmfuvFLjm8P\n6+yqDJlcdWB5YTJDt/rcJbAMOv23fETh2HKbH1YsowmuaL+WTnZ/MvY3G+3r+9nd\n4EI9CDMZzHfTmFUlNCC/4xt0X2fN1tedhQalGIeS+scAxSHIbiAuVWCUKXGVFOIl\nhjieQeGR0jBRgRxLV85+t/f+u5cn6LLsHav9roPsy+ERMP68rtF8T3npA/PsVZKe\nhou0Rl1/AgMBAAECggEAUvTq69uZkFniTZs4DiDALcCN/TfHmETATFGZAiTTP6N7\n7ks/Ooqs+h63kbF5dEaYi+JNpGbPWVPunpTsYZVgPxFgdZrschLrsRn/rNtunh5H\nL4vFqeCDPscuT3EYvXMz4GwDjHgvLUHVe25gosEOZ8ra7HCqU4epil7ALjyPjvMB\nmLYu714p0wrNQtJZ9c7hrnlTtIC1h5kou49VQ3VJRQqxqaHyluJaWiE9ilcPiN8D\n0yW1w5ZVc7ko9BPfsyMCvNgdnbIKKKvX7Fw4sSYctnfIvd7qHkirt2RxEjtTIk6L\nmT5YR+cRQPwqHH0mBhAxzKNGbmNRhaX+isCcZ0GtwQKBgQD6ELIPtialgxwdkxLt\njvWgTjPI0f/pAOd6C6biazxnshufPpIZOzfrULNzFqMB95OfIX5+A8sgO3VcX1mM\nIWw5fIWpCXoiJacupGKoqKG3DGs70Qz0LyvMZpZJXihEn+eKV5yDf42/sAsB5agn\nsQaC1XDm3tsJT2ltSsIvSfJ/PwKBgQDv03lxJVMhZVrF8adXX8oE/0ZbnGF8bepL\nEGkB+1ftxhUvvq0GSf+5mI59FHeryk9eeSEoZgsOy8v8IC8WhVxd+TXrOUIk+ZXQ\nZzhdtw95n3ffy4dHZaVJn6DKsvLYmX34B6PtZyFVOiPVphAmjz+UyzRWyBC6Bav+\nUEvO0u7RwQKBgD4kM/uPil8LC8uVpth99DAX/upitTOT0/ISPzB48ZPbQN370JaQ\njr7dWRq6f1uXyIl861ApZSrnW6zOzRPzok9O0HBHOKCPttHya8n5zeYNIgDFXHC5\n4Cp1O9eTnHIhQoqwZuaOpg0ClFmuVnE2nqWYoOveaZQQteRA9ayGtcpFAoGBAJBF\nlpvzSTQg5d+IRRPx4vTooGnCBH83HCf2AkWX70hxzhL/0NSktXrwBF/IbUliFicO\nFV1ZLbPD872DmvAgX/WEUuRjeKAHqRFK1wTBeETBIvr1VDcmNa25op/t0NtuUvJf\nnkTVsp6zsBT5pmOb7zLSn3TJPA68FMCTi1crW1HBAoGAbGG04Kmp8smYr0/QCrZz\nFnPXr6DgPkRDvMMA1WlQ+9zoErF6c7I3YHzsdfdH7UIo3Rb2GB59/Eu54HqSFF0r\np9jeyO72aJe+mDJZXTQNihHAmREQvyjzUv1NmwQ8t/NIYtnekLozyeEwA8fGZ//n\nf4c2FCPEMUv+ob+/9iYDwdM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "puestodejuan@puestodejuan.iam.gserviceaccount.com",
+  "client_id": "116577167359942890440",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/puestodejuan%40puestodejuan.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
